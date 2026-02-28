@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سلة الطلبات | مشاعل للعود</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+margin:0;
+font-family:'Tajawal',sans-serif;
+background:#000;
+color:#fff;
+padding:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+.invoice{
+background:#111;
+padding:20px;
+border-radius:15px;
+white-space:pre-wrap;
+margin-bottom:20px;
+border:1px solid #222;
+}
+
+input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-bottom:15px;
+font-size:16px;
+}
+
+.send-btn{
+background:#0d3b66;
+color:#fff;
+border:none;
+padding:14px;
+width:100%;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+}
+
+.send-btn:hover{
+background:#155fa0;
+}
+
+.back-btn{
+display:block;
+text-align:center;
+margin-top:15px;
+color:#7a1414;
+text-decoration:none;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<h1>🛒 سلة طلباتك</h1>
+
+<div class="invoice" id="invoiceBox"></div>
+
+<input type="text" id="customerName" placeholder="اكتب اسمك هنا">
+
+<button class="send-btn" onclick="sendOrder()">
+📩 إرسال الطلب إلى واتساب
+</button>
+
+<a href="elite.html" class="back-btn">
+⬅ العودة للتسوق
+</a>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function renderInvoice(){
+
+let box=document.getElementById("invoiceBox");
+let customer=document.getElementById("customerName").value || "{اسم العميل}";
+let total=0;
+
+let text="»             ﴿ طلب مشاعل للعود ﴾\n";
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+
+cart.forEach(item=>{
+text+=`⌯⤿ ${item.name} ↫ ${item.qty} ↫ ${item.price} ريال\n`;
+total+=item.price;
+});
+
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+text+=`⌯⤿ السعر الاجمالي ↫ ${total} ريال\n`;
+text+=`⌯⤿ اسم العميل ↫ ${customer}\n`;
+text+="فضلاً تأكيد الطلب ثم ارسال موقع التسليم\n";
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+text+="متجر مشاعل للعود 🪷";
+
+box.textContent=text;
+}
+
+function sendOrder(){
+
+let customer=document.getElementById("customerName").value;
+if(customer===""){
+alert("اكتب اسمك أولاً");
+return;
+}
+
+let total=0;
+let text="»             ﴿ طلب مشاعل للعود ﴾\n";
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+
+cart.forEach(item=>{
+text+=`⌯⤿ ${item.name} ↫ ${item.qty} ↫ ${item.price} ريال\n`;
+total+=item.price;
+});
+
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+text+=`⌯⤿ السعر الاجمالي ↫ ${total} ريال\n`;
+text+=`⌯⤿ اسم العميل ↫ ${customer}\n`;
+text+="⎔ ⋅ ─────━ •    ⃟﷽ • ━───── ⋅ ⎔\n";
+text+="متجر مشاعل للعود 🪷";
+
+let phone="+212601432914";
+
+let url="https://wa.me/"+phone+"?text="+encodeURIComponent(text);
+
+window.open(url,"_blank");
+
+localStorage.removeItem("cart");
+
+setTimeout(()=>{
+alert("شكراً لطلبك 💗");
+location.href="index.html";
+},1000);
+
+}
+
+renderInvoice();
+
+</script>
+
+</body>
+</html>

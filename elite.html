@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسوق واطلب الآن | مشاعل للعود</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+margin:0;
+font-family:'Tajawal',sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
+}
+
+.circle-btn{
+position:fixed;
+top:20px;
+width:46px;
+height:46px;
+border-radius:50%;
+background:#111;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:50;
+}
+.social-btn{left:20px}
+.home-btn{right:20px}
+
+.section-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+padding:90px 10px 20px;
+}
+
+.section-buttons button{
+background:#111;
+border:none;
+color:#fff;
+padding:10px 22px;
+border-radius:50px;
+cursor:pointer;
+}
+
+.section-buttons button:hover{
+background:#7a1414;
+}
+
+.products-section{display:none;padding:30px 20px}
+.products-section.active{display:block}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+}
+
+.product{
+background:#111;
+border-radius:20px;
+border:1px solid #222;
+overflow:hidden;
+}
+
+.product img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.product-content{
+padding:18px;
+text-align:center;
+}
+
+.price{
+color:#7a1414;
+font-weight:bold;
+margin:10px 0;
+}
+
+.qty button{
+background:#7a1414;
+border:none;
+color:#fff;
+width:30px;
+height:30px;
+cursor:pointer;
+}
+
+.add-btn{
+background:#0d3b66;
+border:none;
+color:#fff;
+padding:10px;
+width:100%;
+margin-top:10px;
+cursor:pointer;
+}
+
+.cart-bar{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#111;
+padding:15px;
+text-align:center;
+cursor:pointer;
+border-top:2px solid #7a1414;
+}
+
+.cart-popup{
+position:fixed;
+bottom:-100%;
+left:0;
+right:0;
+background:#000;
+border-top:3px solid #7a1414;
+padding:20px;
+transition:.4s;
+max-height:60vh;
+overflow:auto;
+}
+
+.cart-popup.active{bottom:0}
+
+.checkout-btn{
+background:#7a1414;
+border:none;
+color:#fff;
+padding:12px;
+width:100%;
+margin-top:15px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="circle-btn social-btn" onclick="location.href='index.html'">
+<i class="fas fa-home"></i>
+</div>
+
+<div class="circle-btn home-btn" onclick="location.href='docs.html'">
+<i class="fas fa-shopping-cart"></i>
+</div>
+
+<div class="section-buttons">
+<button onclick="showSection('men')">رجالي</button>
+<button onclick="showSection('women')">نسائي</button>
+<button onclick="showSection('gifts')">الهدايا</button>
+<button onclick="showSection('offers')">العروض</button>
+<button onclick="showSection('new')">الجديد</button>
+<button onclick="showSection('incense')">البخور</button>
+</div>
+
+<!-- ================= رجالي ================= -->
+<div id="men" class="products-section active">
+<div class="products">
+
+<div class="product" data-name="رجالي 1" data-price="250">
+<img src="1.jpg">
+<div class="product-content">
+<h3>رجالي 1</h3>
+<div class="price">250 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="رجالي 2" data-price="300">
+<img src="2.jpg">
+<div class="product-content">
+<h3>رجالي 2</h3>
+<div class="price">300 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="رجالي 3" data-price="280">
+<img src="3.jpg">
+<div class="product-content">
+<h3>رجالي 3</h3>
+<div class="price">280 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ================= نسائي ================= -->
+<div id="women" class="products-section">
+<div class="products">
+
+<div class="product" data-name="نسائي 1" data-price="260">
+<img src="4.jpg">
+<div class="product-content">
+<h3>نسائي 1</h3>
+<div class="price">260 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="نسائي 2" data-price="320">
+<img src="5.jpg">
+<div class="product-content">
+<h3>نسائي 2</h3>
+<div class="price">320 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="نسائي 3" data-price="290">
+<img src="6.jpg">
+<div class="product-content">
+<h3>نسائي 3</h3>
+<div class="price">290 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ================= الهدايا ================= -->
+<div id="gifts" class="products-section">
+<div class="products">
+<div class="product" data-name="هدية 1" data-price="400">
+<img src="7.jpg">
+<div class="product-content">
+<h3>هدية 1</h3>
+<div class="price">400 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="هدية 2" data-price="450">
+<img src="8.jpg">
+<div class="product-content">
+<h3>هدية 2</h3>
+<div class="price">450 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="هدية 3" data-price="500">
+<img src="9.jpg">
+<div class="product-content">
+<h3>هدية 3</h3>
+<div class="price">500 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ================= العروض ================= -->
+<div id="offers" class="products-section">
+<div class="products">
+<div class="product" data-name="عرض 1" data-price="199">
+<img src="10.jpg">
+<div class="product-content">
+<h3>عرض 1</h3>
+<div class="price">199 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="عرض 2" data-price="249">
+<img src="11.jpg">
+<div class="product-content">
+<h3>عرض 2</h3>
+<div class="price">249 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="عرض 3" data-price="299">
+<img src="12.jpg">
+<div class="product-content">
+<h3>عرض 3</h3>
+<div class="price">299 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ================= الجديد ================= -->
+<div id="new" class="products-section">
+<div class="products">
+<div class="product" data-name="جديد 1" data-price="270">
+<img src="13.jpg">
+<div class="product-content">
+<h3>جديد 1</h3>
+<div class="price">270 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="جديد 2" data-price="310">
+<img src="14.jpg">
+<div class="product-content">
+<h3>جديد 2</h3>
+<div class="price">310 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="جديد 3" data-price="350">
+<img src="15.jpg">
+<div class="product-content">
+<h3>جديد 3</h3>
+<div class="price">350 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ================= البخور ================= -->
+<div id="incense" class="products-section">
+<div class="products">
+<div class="product" data-name="بخور 1" data-price="150">
+<img src="16.jpg">
+<div class="product-content">
+<h3>بخور 1</h3>
+<div class="price">150 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="بخور 2" data-price="180">
+<img src="17.jpg">
+<div class="product-content">
+<h3>بخور 2</h3>
+<div class="price">180 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+
+<div class="product" data-name="بخور 3" data-price="220">
+<img src="18.jpg">
+<div class="product-content">
+<h3>بخور 3</h3>
+<div class="price">220 ريال</div>
+<div class="qty">
+<button onclick="changeQty(this,-1)">-</button>
+<span class="quantity">1</span>
+<button onclick="changeQty(this,1)">+</button>
+</div>
+<button class="add-btn" onclick="addToCart(this)">إضافة للسلة</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="cart-bar" onclick="toggleCart()">سلة طلباتك</div>
+
+<div class="cart-popup" id="cartPopup">
+<div id="cartItems"></div>
+<button class="checkout-btn" onclick="goToCheckout()">اكتمال الطلب</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function showSection(id){
+document.querySelectorAll(".products-section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function changeQty(btn,change){
+let qtySpan=btn.parentElement.querySelector(".quantity");
+let qty=parseInt(qtySpan.textContent);
+qty+=change;
+if(qty<1) qty=1;
+qtySpan.textContent=qty;
+}
+
+function addToCart(btn){
+let product=btn.closest(".product");
+let name=product.dataset.name;
+let price=parseInt(product.dataset.price);
+let qty=parseInt(product.querySelector(".quantity").textContent);
+
+cart.push({name:name,qty:qty,price:price*qty});
+localStorage.setItem("cart",JSON.stringify(cart));
+alert("تم الإضافة");
+}
+
+function toggleCart(){
+document.getElementById("cartPopup").classList.toggle("active");
+renderCart();
+}
+
+function renderCart(){
+let box=document.getElementById("cartItems");
+box.innerHTML="";
+cart.forEach(item=>{
+box.innerHTML+=`<div>${item.name} × ${item.qty} = ${item.price} ريال</div>`;
+});
+}
+
+function goToCheckout(){
+location.href="docs.html";
+}
+</script>
+
+</body>
+</html>
